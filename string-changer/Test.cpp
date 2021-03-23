@@ -3,7 +3,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-TEST(StringCnager), word)
+TEST(StringChanger, word)
 {
     std::string origin = random_word();
     auto reversed = word_order_changer(origin);
@@ -11,7 +11,7 @@ TEST(StringCnager), word)
     EXPECT_EQ(origin, get_origin);
 }
 
-TEST(StringCnager, empty_string)
+TEST(StringChanger, empty_string)
 {
     std::string origin;
     auto reversed = word_order_changer(origin);
@@ -19,7 +19,7 @@ TEST(StringCnager, empty_string)
     EXPECT_EQ(origin, get_origin);
 }
 
-TEST(StringCnager, real_string)
+TEST(StringChanger, real_string)
 {
     std::string origin = random_string();
     auto reversed = word_order_changer(origin);
