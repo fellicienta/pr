@@ -5,24 +5,24 @@
 
 TEST(WordPack, word)
 {
-    std::string w = random_word();
-    auto packed = pack(w);
-    auto unpacked = unpack(packed);
-    EXPECT_EQ(w, unpacked);
+    std::string origin = random_word();
+    auto reversed = word_order_changer(origin);
+    auto get_origin = word_order_changer(reversed);
+    EXPECT_EQ(origin, get_origin);
 }
 
 TEST(WordPack, empty_string)
 {
-    std::string w;
-    auto packed = pack(w);
-    auto unpacked = unpack(packed);
-    EXPECT_EQ(w, unpacked);
+    std::string origin;
+    auto reversed = word_order_changer(origin);
+    auto get_origin = word_order_changer(reversed);
+    EXPECT_EQ(origin, get_origin);
 }
 
 TEST(WordPack, real_string)
 {
-    std::string w = random_string();
-    auto packed = pack(w);
-    auto unpacked = unpack(packed);
-    EXPECT_EQ(w, unpacked);
+    std::string origin = random_string();
+    auto reversed = word_order_changer(origin);
+    auto get_origin = word_order_changer(reversed);
+    EXPECT_EQ(origin, get_origin);
 }
