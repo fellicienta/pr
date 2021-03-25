@@ -11,7 +11,7 @@ double get_probability(std::vector<Card> & deck) {
 			shuffle(deck);
 
 			if (deck.at(i).face == "Ace" && deck.at(i).suit == deck.at(6).suit)
-				counter++;
+				++counter;
 		}
 	}
 
