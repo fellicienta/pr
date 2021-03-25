@@ -5,12 +5,11 @@
 
 int main() {
 	std::string original = random_string();
-	
-	std::string reversed = word_order_changer(original);
+	std::string copy = original; 
+	word_order_changer(original);
+	word_order_changer(original);
 
-	std::string get_origin = word_order_changer(reversed);
-
-	assert(original == get_origin);
+	assert(original == copy);
     std::cout << "It's working!\n";
 	return 0;
 }

@@ -5,23 +5,26 @@
 TEST(StringChanger, word)
 {
     std::string origin = random_word();
-    auto reversed = word_order_changer(origin);
-    auto get_origin = word_order_changer(reversed);
-    EXPECT_EQ(origin, get_origin);
+    std::string copy(origin);
+    word_order_changer(origin);
+    word_order_changer(origin);
+    EXPECT_EQ(origin, copy);
 }
 
 TEST(StringChanger, empty_string)
 {
     std::string origin;
-    auto reversed = word_order_changer(origin);
-    auto get_origin = word_order_changer(reversed);
-    EXPECT_EQ(origin, get_origin);
+    std::string copy(origin);
+    word_order_changer(origin);
+    word_order_changer(origin);
+    EXPECT_EQ(origin, copy);
 }
 
 TEST(StringChanger, real_string)
 {
     std::string origin = random_string();
-    auto reversed = word_order_changer(origin);
-    auto get_origin = word_order_changer(reversed);
-    EXPECT_EQ(origin, get_origin);
+    std::string copy(origin);
+    word_order_changer(origin);
+    word_order_changer(origin);
+    EXPECT_EQ(origin, copy);
 }

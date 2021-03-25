@@ -2,26 +2,25 @@
 
 #include <string>
 #include <random>
+#include <algorithm>
+#include <iterator>
 
+void word_order_changer(std::string& s) {
+	if (s.empty() || s.find(' ') == s.npos)
+		return;
 
-std::string word_order_changer(std::string s) {
-	std::string new_str;
-	size_t position;
+	auto begin = s.begin();
+	auto end = s.end();
+	std::reverse(begin, end);
+	auto current = std::find(begin, end, ' ');
 
-	while (!s.empty()) {
-		position = s.find_last_of(' ');
-
-		if (position == s.npos)
-			break;
-
-		new_str.append(s.substr(position + 1));
-		new_str.append(" ");
-		s.erase(position, s.length() - 1);
+	while (current != end) {
+		std::reverse(begin, current);
+		begin = current + 1;
+		current = std::find(begin, end, ' ');
 	}
 
-	new_str.append(s);
-
-	return new_str;
+	std::reverse(begin, end);
 }
 
 std::string random_string() {
