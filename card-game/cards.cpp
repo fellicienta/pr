@@ -10,7 +10,7 @@ double get_probability(std::vector<Card> & deck) {
 		for (uint16_t i = 0; i < 6; ++i) {
 			shuffle(deck);
 
-			if (deck.at(i).face == "Ace" && deck.at(i).suit == deck.at(7).suit)
+			if (deck.at(i).face == "Ace" && deck.at(i).suit == deck.at(6).suit)
 				counter++;
 		}
 	}
