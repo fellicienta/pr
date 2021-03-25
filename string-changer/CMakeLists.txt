@@ -1,22 +1,15 @@
 cmake_minimum_required(VERSION 3.16.3)
-
 set (CMAKE_CXX_STANDART 17)
 
-project (str_changer) 
+project(str-changer)
 
-#find_package(GTest REQUIRED)
-add_subdirectory(googletest)
-include(GoogleTest)
+set(PROJECT_NAME "str-changer")
 
-enable_testing()
+set(SOURCES function.cpp)
 
-set (SOURCE_EXE Test.cpp)
-set (SOURCE_LIB function.cpp)
+set(TEST_SOURCES ${SOURCES} Test.cpp)
 
-add_library(function STATIC ${SOURCE_LIB})
-add_executable(main ${SOURCE_EXE})
+add_executable(test-${PROJECT_NAME} ${TEST_SOURCES})
+target_link_libraries(test-${PROJECT_NAME} GTest::GTest GTest::Main)
 
-target_link_libraries(main function gtest gtest_main gmock)
-
-
-gtest_discover_tests(main)
+gtest_discover_tests(test-${PROJECT_NAME}))
