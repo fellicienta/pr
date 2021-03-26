@@ -14,7 +14,7 @@ int main () {
         value = rand_value();
         T.action(value);
         H.action(value);
-        print_line(H.get_position(), H.get_position());        
+        print_line(T.get_position(), H.get_position());        
     }
 
     return 0;
