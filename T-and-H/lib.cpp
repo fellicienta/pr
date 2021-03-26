@@ -20,8 +20,7 @@ void print_line(uint16_t t_position, uint16_t h_position) {
         else 
             std::cout << ' ';
     }
-        std::cout << "|>" << std::endl;
-
+    std::cout << "|>" << std::endl;
 }
 
 void Tortoise::action(uint16_t value) {
@@ -59,7 +58,7 @@ uint16_t Tortoise::get_position() {
 }
 
 bool Tortoise::is_winner() {
-    return position >= 70 ;
+    return position >= 70;
 }
 
 void Hare::action(uint16_t value) {
