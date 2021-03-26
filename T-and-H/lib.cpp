@@ -1,5 +1,5 @@
 #include <random>
-#include <stdint.h>
+#include <iostream>
 #include "lib.h"
 
 uint16_t rand_value() {
@@ -7,6 +7,20 @@ uint16_t rand_value() {
 	static std::mt19937 g(rd());
 
 	return rd() % 10 + 1;
+}
+
+void print_line(uint16_t t_position, uint16_t h_position) {
+    for (uint16_t i = 1; i <= 70; ++i) {
+        if(i < t_position && i < h_position)
+            std::cout << ' ';
+        else if ((i == t_position) && (i = h_position))
+            std::cout << "OUCH!!!";
+        else if (i == t_position)
+            std::cout << 'T';
+        else if (i == h_position)
+            std::cout << 'H';
+    }
+        std::cout << std::endl;
 }
 
 void Tortoise::action(uint16_t value) {
