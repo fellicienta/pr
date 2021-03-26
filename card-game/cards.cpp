@@ -4,14 +4,16 @@
 #include "cards.h"
 
 double get_probability(std::vector<Card> & deck) {
-	uint16_t counter = 0;
+	uint32_t counter = 0;
 
-	for (uint16_t deal = 0; deal < 1000; ++deal) {
+	for (uint16_t deal = 0; deal < 10000; ++deal) {
+		shuffle(deck);
+
 		for (uint16_t i = 0; i < 6; ++i) {
-			shuffle(deck);
-
-			if (deck.at(i).face == "Ace" && deck.at(i).suit == deck.at(6).suit)
+			if (deck.at(i).face == "Ace" && deck.at(i).suit == deck.at(6).suit) {
 				++counter;
+				break;
+			}
 		}
 	}
 
