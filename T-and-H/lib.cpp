@@ -12,7 +12,7 @@ uint16_t rand_value() {
 void print_line(uint16_t t_position, uint16_t h_position) {
     for (uint16_t i = 1; i <= 70; ++i) {
         if(i < t_position && i < h_position)
-            std::cout << ' ';
+            std::cout << i ;
         else if ((i == t_position) && (i == h_position))
             std::cout << "OUCH!!!";
         else if (i == t_position)
@@ -20,7 +20,7 @@ void print_line(uint16_t t_position, uint16_t h_position) {
         else if (i == h_position)
             std::cout << 'H';
     }
-        std::cout << std::endl;
+        std::cout << std::endl << "T -> " << t_position << " | H -> " << h_position << std::endl;
 }
 
 void Tortoise::action(uint16_t value) {
@@ -37,6 +37,7 @@ void Tortoise::action(uint16_t value) {
         case 8:
         case 9:
         case 10: slow_plod();
+                break;
     }
 }
 
