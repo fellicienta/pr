@@ -61,7 +61,7 @@ uint16_t Tortoise::get_position() {
 }
 
 bool Tortoise::is_winner() {
-    return position == 70;
+    return position >= 70 ;
 }
 
 void Hare::action(uint16_t value) {
@@ -108,5 +108,5 @@ uint16_t Hare::get_position() {
 }
 
 bool Hare::is_winner() {
-    return position == 70;
+    return position >= 70;
 }
