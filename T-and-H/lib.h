@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 uint16_t rand_value();
+void print_line(uint16_t t_position, uint16_t h_position);
 
 class Tortoise 
 {
