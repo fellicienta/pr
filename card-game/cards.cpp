@@ -17,7 +17,7 @@ double get_probability(std::vector<Card> & deck) {
 		}
 	}
 
-	return counter / 1000.0;
+	return counter / 10000.0;
 }
 
 void fillDeck(std::vector<Card> & deck, const std::vector<std::string> & face, const std::vector<std::string> & suit) {
