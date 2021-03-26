@@ -19,7 +19,7 @@ void print_line(uint16_t t_position, uint16_t h_position) {
             std::cout << 'T';
         else if (i == h_position)
             std::cout << 'H';
-        else if (i != t_position && i != h_position)
+        else 
             std::cout << ' ';
     }
         std::cout << "|>" << std::endl;
