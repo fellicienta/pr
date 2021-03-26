@@ -8,9 +8,11 @@ int main () {
     uint16_t value;
     std::cout << "BANG !!!!!" << std::endl;
     std::cout << "AND THEY'RE OFF !!!!!" << std::endl;
+    std::cout << "TH" << std::endl;
+
 
     for ( ; ;) {
-        sleep(0.75);
+        sleep(1);
         value = rand_value();
         T.action(value);
         H.action(value);
