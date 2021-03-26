@@ -23,6 +23,7 @@ void print_line(uint16_t t_position, uint16_t h_position) {
             std::cout << ' ';
     }
         std::cout << "|>" << std::endl;
+
 }
 
 void Tortoise::action(uint16_t value) {
@@ -57,6 +58,10 @@ void Tortoise::slow_plod() {     // 1 square to the right
 
 uint16_t Tortoise::get_position() {
     return position;
+}
+
+bool Tortoise::is_winner() {
+    return position == 70;
 }
 
 void Hare::action(uint16_t value) {
@@ -100,4 +105,8 @@ void Hare::small_slip() {     // 2 squares to the left
 
 uint16_t Hare::get_position() {
     return position;
+}
+
+bool Hare::is_winner() {
+    return position == 70;
 }

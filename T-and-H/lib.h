@@ -12,6 +12,7 @@ public:
     void slip();
     void slow_plod();
     uint16_t get_position();
+    bool is_winner();
 private:
     uint16_t position = 1;
 };
@@ -25,6 +26,7 @@ public:
     void big_slip();
     void small_hop();
     void small_slip();
+    bool is_winner();
     uint16_t get_position();
 private:
     uint16_t position = 1;
