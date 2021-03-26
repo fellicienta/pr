@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.16.3)
 
-set (CMAKE_CXX_STANDART 17)
-
 project (T-and-H) 
 
 set (SOURCE_EXE main.cpp)
