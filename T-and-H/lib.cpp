@@ -13,7 +13,7 @@ void print_line(uint16_t t_position, uint16_t h_position) {
     for (uint16_t i = 1; i <= 70; ++i) {
         if(i < t_position && i < h_position)
             std::cout << ' ';
-        else if ((i == t_position) && (i = h_position))
+        else if ((i == t_position) && (i == h_position))
             std::cout << "OUCH!!!";
         else if (i == t_position)
             std::cout << 'T';
