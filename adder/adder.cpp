@@ -12,8 +12,8 @@ int logical_add(int number1, int number2) {
     int result = 0;
 
     for (int i = 0; i < size; ++i) {
-        x = x & mask;
-        y = y & mask;
+        x = number1 & mask;
+        y = number2 & mask;
         z = x ^ y ^ q;
         result += (z << i);
 
