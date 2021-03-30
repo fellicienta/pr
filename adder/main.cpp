@@ -7,7 +7,7 @@ int main() {
     int a = 5;
     int b = 3;
  //   assert((5+3) == logical_add(a, b));
-    std::cout << logical_add(a, b) << std::endl;
+    std::cout << logical_add(1, 1) << std::endl;
 
     return 0;
 }
