@@ -1,12 +1,20 @@
-cmake_minimum_required (VERSION 3.20)
+cmake_minimum_required(VERSION 3.20)
 
-project(adder)
+set (CMAKE_CXX_STANDART 17)
 
-set(SOURCE_EXE main.cpp)
-set(SOURCE_LIB adder.cpp)
+project (adder) 
+
+add_subdirectory(googletest)
+include(GoogleTest)
+
+enable_testing()
+
+set (SOURCE_EXE Test.cpp)
+set (SOURCE_LIB adder.cpp)
 
 add_library(adder STATIC ${SOURCE_LIB})
+add_executable(Test ${SOURCE_EXE})
 
-add_executable(main ${SOURCE_EXE})
+target_link_libraries(Test adder gtest gtest_main gmock)
 
-target_link_libraries(main adder)
+gtest_discover_tests(Test)
