@@ -13,7 +13,7 @@ TEST(adder, 1negativ_number) {
     int32_t a = rand_number();
     int32_t b = rand_number();
     
-    EXPECT_EQ(((-a) + b), logical_add(-a, b));
+    EXPECT_EQ((-a + b), logical_add(-a, b));
 }
 
 TEST(adder, 2negativ_numbers) {

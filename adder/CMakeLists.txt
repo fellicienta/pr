@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
 
-set (CMAKE_CXX_STANDART 17)
-
 project (adder) 
 
 add_subdirectory(googletest)
