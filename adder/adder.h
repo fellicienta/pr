@@ -1,4 +1,4 @@
 #pragma once
+#include <stdint.h>
 
-template <typename T>
-T logical_add(T , T);
+uint32_t logical_add(uint32_t number1, uint32_t number2);
