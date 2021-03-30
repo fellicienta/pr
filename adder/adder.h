@@ -1,4 +1,3 @@
 #pragma once
 
-template <typename T>
-T logical_add(T a, T b);
+int logical_add(int a, int b);
