@@ -39,11 +39,11 @@ int main(int ac, char* av[])
             std::cout << atof(av[2]) / atof(av[3]) << ".\n";
         } 
         else {
-            std::cout << "No value entered or some value is missing.\n";
+            std::cout << "Error: no option entered or some value is missing.\n";
         }
     }
     catch(std::exception& e) {
-        std::cerr << "error: " << e.what() << "\n";
+        std::cerr << "Error: " << e.what() << "\n";
         return 1;
     }
     catch(...) {
