@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.16.3)
 
-set (CMAKE_CXX_STANDART 17)
-
 project (coins) 
 
 set (SOURCE_EXE main.cpp)
