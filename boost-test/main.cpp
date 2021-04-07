@@ -7,18 +7,19 @@ namespace po = boost::program_options;
 int main(int ac, char* av[])
 {
     try {
-
+        std::vector<std::string> v;
         po::options_description desc("Allowed options");
         desc.add_options()
             ("help", "Produce help message")
-            ("add", po::value<int32_t>(), "Add values")
-            ("sub", po::value<int32_t>(), "Subtract values")
-            ("mul", po::value<int32_t>(), "Multiply values")
-            ("div", po::value<int32_t>(), "Divide values")
+            ("add", po::value< std::vector<std::string> >(), "Add values")
+            ("sub", po::value< std::vector<std::string> >(), "Subtract values")
+            ("mul", po::value< std::vector<std::string> >(), "Multiply values")
+            ("div", po::value< std::vector<std::string> >(), "Divide values")
         ;
 
         po::variables_map vm;        
-        po::store(po::parse_command_line(ac, av, desc), vm);
+        po::store(po::command_line_parser(ac, av).options(desc).
+                    allow_unregistered().run(), vm);
         po::notify(vm);    
 
         if (vm.count("help")) {
@@ -27,10 +28,10 @@ int main(int ac, char* av[])
         }
 
         if (vm.count("add") && ac == 4) {
-            std::cout << atoi(av[2]) + atoi(av[3]) << ".\n";
+            std::cout << "Add: " << atoi(av[2]) + atoi(av[3]) << ".\n";
         }
-        else if (vm.count("sub") && ac == 4) {
-            std::cout << atoi(av[2]) - atoi(av[3]) << ".\n";
+        if (vm.count("sub") && ac == 4) {
+            std::cout << "Sub: " << atoi(av[2]) - atoi(av[3]) << ".\n";
         } 
         else if (vm.count("mul") && ac == 4) {
             std::cout << atoi(av[2]) * atoi(av[3]) << ".\n";
