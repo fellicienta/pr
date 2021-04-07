@@ -1,7 +1,6 @@
 #include "lib.hpp"
 
 #include <gtest/gtest.h>
-#include <iostream>
 
 struct TestClass : testing::Test{
     Rolling_buffer<int> rb;
