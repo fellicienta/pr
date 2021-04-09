@@ -3,69 +3,77 @@
 #include <gtest/gtest.h>
 #include <iostream>
 
-struct TestStack : ::testing::Test 
-{
+TEST(DoubleStack, empty_stack) {
     DoubleStack<int> ds;
-    void SetUp() {
-    }
-    void TearDown () {
-    }
-};
 
-TEST_F(TestStack, empty_head_stack) {
-    EXPECT_EQ(0, ds.hs_size());
-    EXPECT_EQ(true, ds.hs_empty());
+    EXPECT_EQ(0, ds.size(HEAD));
+    EXPECT_TRUE(ds.empty(HEAD));
+
+    EXPECT_EQ(0, ds.size(TAIL));
+    EXPECT_TRUE(ds.empty(TAIL));
 }
 
-TEST_F(TestStack, empty_tail_stack) {
-    EXPECT_EQ(0, ds.ts_size());
-    EXPECT_EQ(true, ds.ts_empty());
-}
-
-TEST(DoubleStack, push_head) {
+TEST(DoubleStack, non_empty_stack) {
     DoubleStack<int> ds;
-    int quantity = 300;
 
-    for (int i = 1; i <= quantity; ++i) 
-        ds.push(i, 'h');
+    ds.push(0, TAIL);
+    ds.push(0, HEAD);  
 
-    EXPECT_EQ(quantity, ds.hs_size());
+    EXPECT_FALSE(ds.empty(HEAD));
+    EXPECT_FALSE(ds.empty(TAIL));
 }
 
-TEST(DoubleStack, push_tail) {
+TEST(DoubleStack, default_case) {
+    DoubleStack<int> ds;
+
+    EXPECT_EQ(-1, ds.size(static_cast<STACK_>(3)));
+    EXPECT_EQ(-1, ds.pop(static_cast<STACK_>(3)));
+}
+
+TEST(DoubleStack, push_items) {
     DoubleStack<int> ds;
     int quantity = 300;
 
-    for (int i = 1; i <= quantity; ++i) 
-        ds.push(i, 't');
+    for (int i = 1; i <= quantity; ++i) {
+        ASSERT_TRUE(ds.push(i, HEAD));
+        ASSERT_TRUE(ds.push(i, TAIL));
+    }
 
-    EXPECT_EQ(quantity, ds.ts_size());
+    EXPECT_EQ(quantity, ds.size(HEAD));
+    EXPECT_EQ(quantity, ds.size(TAIL));
 }
 
-TEST(DoubleStack, head_overflow) {
+
+TEST(DoubleStack, stack_overflow) {
     DoubleStack<int> ds;
-    int quantity = 600;
+    int middle = ds.capacity() / 2;
+    int quantity = ds.capacity() / 2 + 50;
 
-    //push elements to the tail-stack
-    for (int i = 1; i <= quantity; ++i) 
-        ds.push(i, 't');
-    //try to make an overflow in the head-stack
-    for (int i = 1; i <= quantity; ++i) 
-        ds.push(i, 'h');
-
-    EXPECT_EQ(ds.capacity() - quantity, ds.hs_size());
+    for (int i = 1; i <= quantity; ++i) {
+        if (i <= middle) {
+            ASSERT_TRUE(ds.push(i, TAIL));
+            ASSERT_TRUE(ds.push(i, HEAD));  
+        }
+        if (i > middle) {
+            ASSERT_FALSE(ds.push(i, TAIL));
+            ASSERT_FALSE(ds.push(i, HEAD));  
+        }
+    }
 }
 
-TEST(DoubleStack, tail_overflow) {
+TEST(DoubleStack, pop_items) {
     DoubleStack<int> ds;
-    int quantity = 600;
+    int value = 50;
 
-    //push elements to the head-stack
-    for (int i = 1; i <= quantity; ++i) 
-        ds.push(i, 'h');
-    //try to make an overflow in the tail-stack
-    for (int i = 1; i <= quantity; ++i) 
-        ds.push(i, 't');
-
-    EXPECT_EQ(ds.capacity() - quantity, ds.ts_size());
+    for (int i = 1; i <= value; ++i) {
+        ds.push(i, HEAD);
+        ds.push(i, TAIL);
+    }
+    
+    for (int last_pop_value = value; last_pop_value >= 1; --last_pop_value) {
+        ASSERT_EQ(last_pop_value, ds.pop(HEAD));
+        ASSERT_EQ(last_pop_value, ds.pop(TAIL));
+    }
 }
+
+

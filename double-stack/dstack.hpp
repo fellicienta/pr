@@ -2,49 +2,69 @@
 #include <vector>
 #include <stdint.h>
 
+enum STACK_ {
+    HEAD,
+    TAIL,
+};
+
 template <typename T>
 class DoubleStack
 {
 public:
-    DoubleStack() {
-        stack.resize(1000);
-        head = 0;
-        tail = stack.capacity();
-    }
-    void push(T item, char st) {
-        if ('h' == st && head != tail) {
-            stack.at(head++) = item;
+    DoubleStack() 
+        : stack(1000), head(0), tail(stack.capacity()) 
+        {}    
+    bool push(T item, STACK_ st) {
+        if (head == tail) 
+            return false;
+
+        switch (st) {
+            case HEAD:
+                stack.at(head++) = item;
+                return true;   
+            case TAIL: 
+                stack.at(--tail) = item;
+                return true;   
+            default:
+                return false;
         }
-        else if ('t' == st && head != tail) {
-            stack.at(--tail) = item;
+    }
+    T pop(STACK_ st) {
+        switch (st) {
+            case HEAD: {
+                T item = stack.at(--head);
+                stack.at(head) = 0;
+                return item;
+            }
+            case TAIL: {
+                T item = stack.at(tail);
+                stack.at(tail++) = 0;
+                return item;
+            }
+            default:
+                return -1;
         }
     }
-    uint32_t hs_size() {
-        return head;
+    uint32_t size(STACK_ st) {
+        switch (st) {
+            case HEAD: 
+                return head;
+            case TAIL:
+                return stack.capacity() - tail;
+            default:
+                return -1;
+        }
     }
-    uint32_t ts_size() {
-        return stack.capacity() - tail;
-    }
-    bool hs_empty() {
-        return 0 == hs_size() ?  true : false;
-    }
-    bool ts_empty() {
-        return 0 == ts_size() ?  true :  false;
+    bool empty(STACK_ st) {
+        switch (st) {
+            case HEAD: 
+                return 0 == size(HEAD);
+            case TAIL:
+                return 0 == size(TAIL);
+        }
     }
     uint32_t capacity() {
         return stack.capacity();
-    }
-    typename std::vector<T>::iterator hbegin() {
-        return stack.begin();
-    }
-    typename std::vector<T>::iterator hend() {
-        return stack.begin() + head;
-    }
-    typename std::vector<T>::iterator tbegin() {
-        return stack.begin() + tail;
-    }
-    typename std::vector<T>::iterator tend() {
-        return stack.end();
     }
 private:
     std::vector<T> stack;

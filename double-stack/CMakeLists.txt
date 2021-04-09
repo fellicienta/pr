@@ -9,9 +9,9 @@ include(GoogleTest)
 
 enable_testing()
 
-#set(SOURCES dstack.cpp)
+set(SOURCES dstack.cpp)
 
-#set(APP_SOURCES ${SOURCES} main.cpp)
+set(APP_SOURCES ${SOURCES} main.cpp)
 set(TEST_SOURCES ${SOURCES} Test.cpp)
 
 add_executable(${PROJECT_NAME} ${APP_SOURCES})
