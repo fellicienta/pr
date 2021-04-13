@@ -43,11 +43,6 @@ TEST_F(TestClass, get_position3)
     EXPECT_EQ(formula(n, 3), get_survivor(l, 3));
 }
 
-TEST_F(TestClass, get_position7)
-{
-    EXPECT_EQ(formula(n, 7), get_survivor(l, 7));
-}
-
 TEST_F(TestClass, get_position10)
 {
     EXPECT_EQ(formula(n, 10), get_survivor(l, 10));
