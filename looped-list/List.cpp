@@ -45,3 +45,12 @@ size_t get_survivor(List *list, size_t step)
 
     return current->element;
 }
+
+size_t formula(size_t n, size_t k)
+{
+    size_t res = 0;
+    for (size_t i = 1; i <= n; ++i)
+        res = (res + k) % i;
+
+    return ++res;
+}
