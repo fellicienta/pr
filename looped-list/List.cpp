@@ -18,7 +18,7 @@ List *generate_list(size_t n)
     return head;
 }
 
-size_t get_survivor(List *list, size_t step)
+size_t get_survivor(List *&list, size_t step)
 {
     if (list == nullptr)
         return 0;
@@ -42,7 +42,7 @@ size_t get_survivor(List *list, size_t step)
 
         delete kill;
     }
-
+    list = current;
     return current->element;
 }
 

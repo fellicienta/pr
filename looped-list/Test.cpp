@@ -10,7 +10,7 @@ protected:
     }
     void TearDown() override
     {
-        //       delete l;
+        delete l;
     }
     List *l;
     const size_t n = 10;
