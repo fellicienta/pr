@@ -14,76 +14,85 @@
 #include "List.h"
 #include <gtest/gtest.h>
 
-struct TestClass : public testing::Test
+class TestClass : public ::testing::Test
 {
+protected:
+    void SetUp() override
+    {
+        l = generate_list(n);
+    }
+    void TearDown() override
+    {
+        //       delete l;
+    }
+    List *l;
     const size_t n = 10;
-    List* l = generate_list(n);
 };
 
-
-TEST_F(TestClass, generation) 
+TEST_F(TestClass, generation)
 {
-    List* tmp = l;
-    
-    for (size_t i = 1; i <= n; ++i) {
+    List *tmp = l;
+
+    for (size_t i = 1; i <= n; ++i)
+    {
         EXPECT_EQ(i, tmp->element);
         tmp = tmp->p_next;
     }
     EXPECT_EQ(l->element, tmp->element);
 }
 
-TEST_F(TestClass, get_position1) 
+TEST_F(TestClass, get_position1)
 {
     EXPECT_EQ(10, get_survivor(l, 1));
 }
 
-TEST_F(TestClass, get_position2) 
+TEST_F(TestClass, get_position2)
 {
     EXPECT_EQ(5, get_survivor(l, 2));
 }
 
-TEST_F(TestClass, get_position3) 
+TEST_F(TestClass, get_position3)
 {
     EXPECT_EQ(4, get_survivor(l, 3));
 }
 
-TEST_F(TestClass, get_position4) 
+TEST_F(TestClass, get_position4)
 {
     EXPECT_EQ(5, get_survivor(l, 4));
 }
 
-TEST_F(TestClass, get_position5) 
+TEST_F(TestClass, get_position5)
 {
     EXPECT_EQ(3, get_survivor(l, 5));
 }
 
-TEST_F(TestClass, get_position6) 
+TEST_F(TestClass, get_position6)
 {
     EXPECT_EQ(3, get_survivor(l, 6));
 }
 
-TEST_F(TestClass, get_position7) 
+TEST_F(TestClass, get_position7)
 {
     EXPECT_EQ(9, get_survivor(l, 7));
 }
 
-TEST_F(TestClass, get_position8) 
+TEST_F(TestClass, get_position8)
 {
     EXPECT_EQ(1, get_survivor(l, 8));
 }
 
-TEST_F(TestClass, get_position9) 
+TEST_F(TestClass, get_position9)
 {
     EXPECT_EQ(7, get_survivor(l, 9));
 }
 
-TEST_F(TestClass, get_position10) 
+TEST_F(TestClass, get_position10)
 {
     EXPECT_EQ(8, get_survivor(l, 10));
 }
 
-TEST(List, empty_list) 
+TEST(List, empty_list)
 {
-    List* l = nullptr;
+    List *l = nullptr;
     EXPECT_EQ(0, get_survivor(l, 5));
 }
