@@ -1,40 +1,41 @@
 #include "FileStringList.h"
 #include <gtest/gtest.h>
 
-TEST(FileTest, insert_new_pos)
+class TestClass : public testing::Test
 {
-    FileStringList f("noexist");
-    f.insert("Mark Johnson", 1);
-    f.insert("Sam Williams", 2);
-    f.insert("Linda Anderson", 3);
-    std::string s("Albert Reitschmidt");
-    uint32_t id = 5;
+public:
+    TestClass()
+        : file_name("file")
+        , f(file_name)
+    {
+    }
 
-    EXPECT_TRUE(f.insert(s, id));
-    EXPECT_EQ(s, f.string(id));
-}
+protected:
+    void SetUp()
+    {
+        f.insert("First string to 1 pos", 1);
+        f.insert("Second string to 2 pos", 2);
+        f.insert("Third string to 1 pos", 1);
+        f.insert("Fourth string to 6 pos", 6);
+    }
 
-TEST(FileTest, insert_existing_pos)
+    std::string file_name;
+    FileStringList f;
+};
+
+TEST_F(TestClass, common_test)
 {
-    FileStringList f("noexist");
+    // insert
+    std::string str("Adding new string");
+    f.insert(str, 2);
+    EXPECT_EQ(str, f.string(2));
 
-    EXPECT_FALSE(f.insert("Linda Anderson", 3));
-}
+    // remove
+    str = "Remove-test";
+    f.insert(str, 3);
+    EXPECT_TRUE(f.remove(3));
+    EXPECT_NE(str, f.string(3));
 
-TEST(FileTest, remove_existing_string)
-{
-    FileStringList f("noexist");
-    f.insert("Linda Anderson", 3);
-    std::string s("Elina Bekenova");
-    uint32_t id = 7;
-    f.insert(s, id);
-    EXPECT_TRUE(f.remove(id));
-    EXPECT_EQ("", f.string(id));
-}
-
-TEST(FileTest, remove_nonexisting_string)
-{
-    FileStringList f("noexist");
-    f.insert("Linda Anderson", 3);
-    EXPECT_FALSE(f.remove(20));
+    // get a non-existent position
+    EXPECT_EQ("", f.string(100));
 }
