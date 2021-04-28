@@ -37,14 +37,9 @@ double get_ratio2()
 
     for (uint32_t i = 0; i < families; ++i)
     {
-        uint32_t sex[2] = {0, 0};
-
-        while (sex[1] != 1)
-            ++sex[baby()];
-
-        girls += sex[0];
-        boys += sex[1];
+        while (baby() != 1)
+            ++girls;
     }
 
-    return (double)boys / girls;
+    return (double)families / girls;
 }
