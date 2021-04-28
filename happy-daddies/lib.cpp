@@ -33,7 +33,6 @@ double get_ratio2()
 {
     uint32_t families = 100000;
     uint32_t girls = 0;
-    uint32_t boys = 0;
 
     for (uint32_t i = 0; i < families; ++i)
     {
