@@ -124,13 +124,11 @@ bool FileStringList::remove(uint32_t pos)
     long current = h.first_line;
     m_file.seekg(current, std::ios_base::beg);
     uint32_t counter = 0;
-    // r.offset = h.first_line;
     // read lines till the end of the list
     while (current != INVALID)
     {
         ++counter;
         m_file.read((char *)&r, sizeof(r));
-        // long next = r.offset;
 
         if (pos == counter)
         {
