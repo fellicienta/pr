@@ -4,9 +4,5 @@
 
 TEST(HappyDaddies, test)
 {
-    double expectation = 1.0;
-    double error = expectation / 10;
-
-    EXPECT_NEAR(expectation, get_ratio1(), error);
-    EXPECT_NEAR(expectation, get_ratio2(), error);
+    EXPECT_NEAR(1.0, get_ratio(), 1.0 / 10);
 }
