@@ -33,67 +33,67 @@ bool FileStringList::insert(const std::string &s, uint32_t pos)
     List r; // for reading
     strcpy(w.str, s.c_str());
 
-    long previous = m_file.tellg();
+    uint32_t previous = m_file.tellg();
     // read the header
     Header h;
-    m_file.read((char *)&h, sizeof(h));
+    m_file.read(reinterpret_cast<char *>(&h), sizeof(h));
 
     // is the list empty ?
-    if (h.first_line == INVALID)
+    if (h.first_line == INVALID_OFFSET)
     {
-        h.first_line = m_file.tellg();       // take the pos of the first line
-        m_file.write((char *)&w, sizeof(w)); // add the string
-        m_file.seekp(0, std::ios_base::beg); // rewrite the offset
-        m_file.write((char *)&h.first_line, sizeof(h.first_line));
+        h.first_line = m_file.tellg();                         // take the pos of the first line
+        m_file.write(reinterpret_cast<char *>(&w), sizeof(w)); // add the string
+        m_file.seekp(0, std::ios_base::beg);                   // rewrite the offset
+        m_file.write(reinterpret_cast<char *>(&h.first_line), sizeof(h.first_line));
         m_file.close();
         return true;
     }
 
-    long new_line;
-    if (h.removed_line != INVALID) // if removed line exists
+    uint32_t new_line;
+    if (h.removed_line != INVALID_OFFSET) // if removed line exists
     {
         m_file.seekp(h.removed_line, std::ios_base::beg); // go to removed line
         new_line = m_file.tellp();
-        m_file.write((char *)&w, sizeof(w)); // write the data
+        m_file.write(reinterpret_cast<char *>(&w), sizeof(w)); // write the data
         // reset header
-        h.removed_line = INVALID;
+        h.removed_line = INVALID_OFFSET;
         m_file.seekp(sizeof(h.first_line), std::ios_base::beg);
-        m_file.write((char *)&h.removed_line, sizeof(h.removed_line));
+        m_file.write(reinterpret_cast<char *>(&h.removed_line), sizeof(h.removed_line));
     }
     else
     {
         m_file.seekp(0, std::ios_base::end); // go to eof
         new_line = m_file.tellp();
-        m_file.write((char *)&w, sizeof(w)); // write the data
+        m_file.write(reinterpret_cast<char *>(&w), sizeof(w)); // write the data
     }
 
     // ** insert to the pos **
     // if the list is not empty, go to the first line
-    long current = h.first_line;
+    uint32_t current = h.first_line;
     m_file.seekg(h.first_line, std::ios_base::beg);
     // read the first line
     uint32_t counter = 0;
     r.offset = h.first_line;
     // read lines till the end of the list
-    while (r.offset != INVALID)
+    while (r.offset != INVALID_OFFSET)
     {
         ++counter;
         if (pos == counter)
         {
             m_file.seekp(new_line, std::ios_base::beg); // new --> current
-            m_file.write((char *)&r.offset, sizeof(r.offset));
+            m_file.write(reinterpret_cast<char *>(&r.offset), sizeof(r.offset));
             m_file.seekp(previous, std::ios_base::beg); // previous --> new
-            m_file.write((char *)&new_line, sizeof(r.offset));
+            m_file.write(reinterpret_cast<char *>(&new_line), sizeof(r.offset));
             m_file.close();
             return true;
         }
         previous = current;
         m_file.seekg(r.offset, std::ios_base::beg);
         current = m_file.tellg();
-        m_file.read((char *)&r, sizeof(r));
+        m_file.read(reinterpret_cast<char *>(&r), sizeof(r));
     }
     m_file.seekg(current, std::ios_base::beg);
-    m_file.write((char *)&new_line, sizeof(r.offset));
+    m_file.write(reinterpret_cast<char *>(&new_line), sizeof(r.offset));
 
     m_file.close();
     return true;
@@ -109,9 +109,9 @@ bool FileStringList::remove(uint32_t pos)
     auto previous = m_file.tellg();
     // read the header
     Header h;
-    m_file.read((char *)&h, sizeof(h));
+    m_file.read(reinterpret_cast<char *>(&h), sizeof(h));
     // check if list is empty
-    if (h.first_line == INVALID)
+    if (h.first_line == INVALID_OFFSET)
     {
         m_file.close();
         return false;
@@ -121,25 +121,25 @@ bool FileStringList::remove(uint32_t pos)
     List r; // for reading
 
     // if the list is not empty, go to the first line
-    long current = h.first_line;
+    uint32_t current = h.first_line;
     m_file.seekg(current, std::ios_base::beg);
     uint32_t counter = 0;
     // read lines till the end of the list
-    while (current != INVALID)
+    while (current != INVALID_OFFSET)
     {
         ++counter;
-        m_file.read((char *)&r, sizeof(r));
+        m_file.read(reinterpret_cast<char *>(&r), sizeof(r));
 
         if (pos == counter)
         {
-            m_file.seekp(current, std::ios_base::beg);  // previous --> next
-            m_file.write((char *)&w, sizeof(w));        // clear the line
-            m_file.seekp(previous, std::ios_base::beg); // previous --> next
-            m_file.write((char *)&r.offset, sizeof(r.offset));
+            m_file.seekp(current, std::ios_base::beg);             // previous --> next
+            m_file.write(reinterpret_cast<char *>(&w), sizeof(w)); // clear the line
+            m_file.seekp(previous, std::ios_base::beg);            // previous --> next
+            m_file.write(reinterpret_cast<char *>(&r.offset), sizeof(r.offset));
             // reset header
             h.removed_line = current;
             m_file.seekp(sizeof(h.first_line), std::ios_base::beg);
-            m_file.write((char *)&h.removed_line, sizeof(h.removed_line));
+            m_file.write(reinterpret_cast<char *>(&h.removed_line), sizeof(h.removed_line));
             m_file.close();
             return true;
         }
@@ -162,9 +162,9 @@ std::string &FileStringList::string(uint32_t pos)
 
     // read the header
     Header h;
-    m_file.read((char *)&h, sizeof(h));
+    m_file.read(reinterpret_cast<char *>(&h), sizeof(h));
     // check if the list is empty
-    if (h.first_line == INVALID)
+    if (h.first_line == INVALID_OFFSET)
     {
         m_file.close();
         return *s;
@@ -174,14 +174,14 @@ std::string &FileStringList::string(uint32_t pos)
     // if the file is not empty, go to the first line
     m_file.seekg(h.first_line, std::ios_base::beg);
     // read the first line
-    m_file.read((char *)&r, sizeof(r));
+    m_file.read(reinterpret_cast<char *>(&r), sizeof(r));
     uint32_t counter = 1;
 
     // read lines till the end of the list
-    while (r.offset != INVALID)
+    while (r.offset != INVALID_OFFSET)
     {
         m_file.seekg(r.offset, std::ios_base::beg);
-        m_file.read((char *)&r, sizeof(r));
+        m_file.read(reinterpret_cast<char *>(&r), sizeof(r));
         ++counter;
         if (pos == counter)
         {
