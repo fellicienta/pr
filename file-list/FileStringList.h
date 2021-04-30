@@ -4,19 +4,18 @@
 #include <fstream>
 #include <string>
 
-#define INVALID -1
-#define SIZE 32
+const uint32_t INVALID_OFFSET = std::numeric_limits<uint32_t>::max();
 
 struct List
 {
-    long offset = INVALID;
-    char str[SIZE] = "\0";
+    uint32_t offset = INVALID_OFFSET;
+    char str[32] = "\0";
 };
 
 struct Header
 {
-    long first_line = INVALID;
-    long removed_line = INVALID;
+    uint32_t first_line = INVALID_OFFSET;
+    uint32_t removed_line = INVALID_OFFSET;
 };
 
 class FileStringList : public StringList
