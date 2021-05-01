@@ -1,41 +1,34 @@
 #include "FileStringList.h"
+
 #include <gtest/gtest.h>
 
-class TestClass : public testing::Test
+TEST(FileTest, insert)
 {
-public:
-    TestClass()
-        : file_name("file")
-        , f(file_name)
-    {
-    }
+    FileStringList f("file4");
+    std::string s1("First string");
+    std::string s2("Second string");
+    std::string s3("Third string");
+    std::string s4("Fourth string");
+    std::string s5("Fifth string");
+    std::string s6("Sixth string");
+    std::string s7("Seventh string");
+    std::string s8("Eigth string");
 
-protected:
-    void SetUp()
-    {
-        f.insert("First string to 1 pos", 1);
-        f.insert("Second string to 2 pos", 2);
-        f.insert("Third string to 1 pos", 1);
-        f.insert("Fourth string to 6 pos", 6);
-    }
+    EXPECT_TRUE(f.insert(s1, 1));  // s1
+    EXPECT_TRUE(f.insert(s2, 2));  // s1 s2
+    EXPECT_TRUE(f.insert(s3, 3));  // s1 s2 s3
+    EXPECT_TRUE(f.insert(s4, 4));  // s1 s2 s3 s4
+    EXPECT_TRUE(f.remove(2));      // s1 s3 s4
+    EXPECT_TRUE(f.insert(s5, 3));  // s1 s3 s5 s4
+    EXPECT_TRUE(f.insert(s6, 10)); // s1 s3 s5 s4 s6
+    EXPECT_TRUE(f.remove(1));      // s3 s5 s4 s6
+    EXPECT_TRUE(f.insert(s7, 2));  // s3 s7 s5 s4 s6
+    EXPECT_TRUE(f.insert(s8, 2));  // s3 s8 s7 s5 s4 s6
 
-    std::string file_name;
-    FileStringList f;
-};
-
-TEST_F(TestClass, common_test)
-{
-    // insert
-    std::string str("Adding new string");
-    f.insert(str, 2);
-    EXPECT_EQ(str, f.string(2));
-
-    // remove
-    str = "Remove-test";
-    f.insert(str, 3);
-    EXPECT_TRUE(f.remove(3));
-    EXPECT_NE(str, f.string(3));
-
-    // get a non-existent position
-    EXPECT_EQ("", f.string(100));
+    EXPECT_EQ(s3, f.string(1));
+    EXPECT_EQ(s8, f.string(2));
+    EXPECT_EQ(s7, f.string(3));
+    EXPECT_EQ(s5, f.string(4));
+    EXPECT_EQ(s4, f.string(5));
+    EXPECT_EQ(s6, f.string(6));
 }
