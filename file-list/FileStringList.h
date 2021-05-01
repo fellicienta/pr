@@ -6,10 +6,10 @@
 
 const uint32_t INVALID_OFFSET = std::numeric_limits<uint32_t>::max();
 
-struct List
+struct Read
 {
     uint32_t offset = INVALID_OFFSET;
-    char str[32] = "\0";
+    std::string str;
 };
 
 struct Header
