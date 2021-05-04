@@ -4,7 +4,7 @@
 
 TEST(FileTest, insert)
 {
-    FileStringList f("file4");
+    FileStringList f("file");
     std::string s1("First string");
     std::string s2("Second string");
     std::string s3("Third string");
@@ -12,7 +12,7 @@ TEST(FileTest, insert)
     std::string s5("Fifth string");
     std::string s6("Sixth string");
     std::string s7("Seventh string");
-    std::string s8("Eigth string");
+    std::string s8("Eigth  ");
 
     EXPECT_TRUE(f.insert(s1, 1));  // s1
     EXPECT_TRUE(f.insert(s2, 2));  // s1 s2
