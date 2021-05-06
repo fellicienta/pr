@@ -33,6 +33,7 @@ uint32_t dice_roll(const uint32_t faces)
     return rd() % faces + 1;
 }
 
+// works for 2 dices only
 uint32_t computation(const uint32_t faces)
 {
     std::map<uint32_t, double> probability;
