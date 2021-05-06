@@ -1,42 +1,57 @@
 #include "lib.h"
 
 #include <algorithm>
+#include <map>
 #include <random>
 
-uint32_t experiment(const uint32_t quantity)
+uint32_t experiment(const uint32_t dice, const uint32_t faces, const uint32_t experiments)
 {
-    uint32_t dice_roll();
-    uint32_t frequency[13] = {};
+    uint32_t dice_roll(const uint32_t faces);
+    std::map<uint32_t, uint32_t> frequency;
 
-    for (uint32_t i = 0; i < quantity; ++i)
-        ++frequency[dice_roll() + dice_roll()];
+    for (uint32_t i = 0; i < experiments; ++i)
+    {
+        uint32_t sum = 0;
+        for (uint32_t j = 0; j < dice; ++j)
+            sum += dice_roll(faces);
 
-    return std::distance(frequency, std::max_element(frequency + 2, frequency + 12));
+        ++frequency[sum];
+    }
+
+    return (std::max_element(
+                frequency.begin(), frequency.end(),
+                [](const std::pair<uint32_t, uint32_t> &p1,
+                   const std::pair<uint32_t, uint32_t> &p2) { return p1.second < p2.second; }))
+        ->first;
 }
 
-uint32_t dice_roll()
+uint32_t dice_roll(const uint32_t faces)
 {
     static std::random_device rd;
     static std::mt19937 g(rd());
 
-    return rd() % 6 + 1;
+    return rd() % faces + 1;
 }
 
-uint32_t computation()
+uint32_t computation(const uint32_t faces)
 {
-    double probability[13] = {};
+    std::map<uint32_t, double> probability;
 
-    for (uint32_t i = 1; i <= 6; ++i)
-        for (uint32_t j = 1; j <= 6; ++j)
+    for (uint32_t i = 1; i <= faces; ++i)
+        for (uint32_t j = 1; j <= faces; ++j)
             ++probability[i + j];
 
     uint32_t sum = 0;
 
-    for (uint32_t i = 2; i <= 12; ++i)
-        sum += probability[i];
+    for (auto x : probability)
+        sum += x.second;
 
-    for (uint32_t i = 2; i <= 12; ++i)
-        probability[i] /= sum;
+    for (auto x : probability)
+        x.second /= sum;
 
-    return std::distance(probability, std::max_element(probability + 2, probability + 12));
+    return (std::max_element(
+                probability.begin(), probability.end(),
+                [](const std::pair<uint32_t, uint32_t> &p1,
+                   const std::pair<uint32_t, uint32_t> &p2) { return p1.second < p2.second; }))
+        ->first;
 }
