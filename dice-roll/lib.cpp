@@ -11,13 +11,13 @@ uint32_t roll_sample(const uint32_t dice_in_roll, const uint32_t die_faces,
                      const uint32_t sample_size)
 {
     uint32_t roll_dice(const uint32_t dice_in_roll, const uint32_t die_faces);
-    uint32_t find_highest_frequency(Frequencies frequency);
-    Frequencies frequency;
+    uint32_t find_highest_frequency(Frequencies frequencies);
+    Frequencies frequencies;
 
     for (uint32_t i = 0; i < sample_size; ++i)
-        ++frequency[roll_dice(dice_in_roll, die_faces)];
+        ++frequencies[roll_dice(dice_in_roll, die_faces)];
 
-    return find_highest_frequency(frequency);
+    return find_highest_frequency(frequencies);
 }
 
 uint32_t roll_dice(const uint32_t dice_in_roll, const uint32_t die_faces)
@@ -32,10 +32,10 @@ uint32_t roll_dice(const uint32_t dice_in_roll, const uint32_t die_faces)
     return sum;
 }
 
-uint32_t find_highest_frequency(Frequencies frequency)
+uint32_t find_highest_frequency(Frequencies frequencies)
 {
     Frequency it = std::max_element(
-        frequency.begin(), frequency.end(),
+        frequencies.begin(), frequencies.end(),
         [](const std::pair<uint32_t, uint32_t> &p1, const std::pair<uint32_t, uint32_t> &p2) {
             return p1.second < p2.second;
         });
