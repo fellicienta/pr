@@ -4,6 +4,5 @@
 
 TEST(RollDice, main)
 {
-    EXPECT_EQ(computation(6), roll_sample(2, 6, 100000));
-    EXPECT_EQ(computation(12), roll_sample(2, 12, 100000));
+    EXPECT_EQ(7, roll_sample(2, 6, 100000));
 }

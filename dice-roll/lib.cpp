@@ -1,6 +1,7 @@
 #include "lib.h"
 
 #include <algorithm>
+#include <map>
 #include <random>
 
 using Frequencies = std::map<uint32_t, uint32_t>;
@@ -42,26 +43,3 @@ uint32_t roll_sample(const uint32_t dice_in_roll, const uint32_t die_faces,
 
     return find_highest_frequency(frequencies);
 }
-
-// uint32_t computation(const uint32_t die_faces)
-// {
-//     std::map<uint32_t, double> probability;
-
-//     for (uint32_t i = 1; i <= die_faces; ++i)
-//         for (uint32_t j = 1; j <= die_faces; ++j)
-//             ++probability[i + j];
-
-//     uint32_t sum = 0;
-
-//     for (auto x : probability)
-//         sum += x.second;
-
-//     for (auto x : probability)
-//         x.second /= sum;
-
-//     return (std::max_element(
-//                 probability.begin(), probability.end(),
-//                 [](const std::pair<uint32_t, uint32_t> &p1,
-//                    const std::pair<uint32_t, uint32_t> &p2) { return p1.second < p2.second; }))
-//         ->first;
-// }
