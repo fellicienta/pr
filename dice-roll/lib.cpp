@@ -3,19 +3,11 @@
 #include <algorithm>
 #include <random>
 
-uint32_t roll_sample(const uint32_t dice_in_roll, const uint32_t die_faces,
-                     const uint32_t sample_size)
+using Frequencies = std::map<uint32_t, uint32_t>;
+using Frequency = Frequencies::const_iterator;
+
+namespace
 {
-    uint32_t roll_dice(const uint32_t dice_in_roll, const uint32_t die_faces);
-    uint32_t find_highest_frequency(const Frequencies frequencies);
-    Frequencies frequencies;
-
-    for (uint32_t i = 0; i < sample_size; ++i)
-        ++frequencies[roll_dice(dice_in_roll, die_faces)];
-
-    return find_highest_frequency(frequencies);
-}
-
 uint32_t roll_dice(const uint32_t dice_in_roll, const uint32_t die_faces)
 {
     static std::random_device rd;
@@ -38,8 +30,19 @@ uint32_t find_highest_frequency(const Frequencies frequencies)
 
     return it->first;
 }
+} // namespace
 
-// works for 2 dices only
+uint32_t roll_sample(const uint32_t dice_in_roll, const uint32_t die_faces,
+                     const uint32_t sample_size)
+{
+    Frequencies frequencies;
+
+    for (uint32_t i = 0; i < sample_size; ++i)
+        ++frequencies[roll_dice(dice_in_roll, die_faces)];
+
+    return find_highest_frequency(frequencies);
+}
+
 // uint32_t computation(const uint32_t die_faces)
 // {
 //     std::map<uint32_t, double> probability;
