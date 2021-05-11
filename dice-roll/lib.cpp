@@ -4,7 +4,8 @@
 #include <map>
 #include <random>
 
-using Frequencies = std::map<uint32_t, uint32_t>;
+using Value = uint32_t;
+using Frequencies = std::map<Value, uint32_t>;
 using Frequency = Frequencies::const_iterator;
 
 namespace
@@ -20,8 +21,7 @@ uint32_t roll_dice(const uint32_t dice_in_roll, const uint32_t die_faces)
 
     return sum;
 }
-
-uint32_t find_highest_frequency(const Frequencies frequencies)
+Value find_highest_frequency(const Frequencies &frequencies)
 {
     Frequency it = std::max_element(
         frequencies.begin(), frequencies.end(),
@@ -29,12 +29,12 @@ uint32_t find_highest_frequency(const Frequencies frequencies)
             return p1.second < p2.second;
         });
 
-    return it->first;
+    return it != frequencies.end() ? it->first : 0;
 }
 } // namespace
 
-uint32_t roll_sample(const uint32_t dice_in_roll, const uint32_t die_faces,
-                     const uint32_t sample_size)
+Value get_most_frequent_dice_roll(const uint32_t dice_in_roll, const uint32_t die_faces,
+                                  const uint32_t sample_size)
 {
     Frequencies frequencies;
 
