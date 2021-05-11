@@ -4,5 +4,5 @@
 
 TEST(RollDice, main)
 {
-    EXPECT_EQ(7, roll_sample(2, 6, 100000));
+    EXPECT_EQ(7, get_most_frequent_dice_roll(2, 6, 100000));
 }
