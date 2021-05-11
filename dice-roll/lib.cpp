@@ -4,7 +4,6 @@
 #include <map>
 #include <random>
 
-using Value = uint32_t;
 using Frequencies = std::map<Value, uint32_t>;
 using Frequency = Frequencies::const_iterator;
 
