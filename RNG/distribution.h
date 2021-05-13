@@ -17,10 +17,10 @@ public:
     virtual int32_t generate() = 0;
 };
 
-class NormalDistrib : public Distribution
+class NormalDistribution : public Distribution
 {
 public:
-    NormalDistrib(const int32_t mean, const uint32_t deviation)
+    NormalDistribution(const int32_t mean, const uint32_t deviation)
         : d(mean, deviation)
     {
     }
@@ -30,10 +30,10 @@ private:
     std::normal_distribution<> d;
 };
 
-class ExponentialDistrib : public Distribution
+class ExponentialDistribution : public Distribution
 {
 public:
-    ExponentialDistrib(const uint32_t time_unit)
+    ExponentialDistribution(const uint32_t time_unit)
         : d(time_unit)
     {
     }
@@ -43,10 +43,10 @@ private:
     std::exponential_distribution<> d;
 };
 
-class UniformIntDistrib : public Distribution
+class UniformIntDistribution : public Distribution
 {
 public:
-    UniformIntDistrib(const int32_t a, const int32_t b)
+    UniformIntDistribution(const int32_t a, const int32_t b)
         : d(a, b)
     {
     }

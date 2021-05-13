@@ -2,17 +2,17 @@
 
 #include <fstream>
 
-int32_t NormalDistrib::generate()
+int32_t NormalDistribution::generate()
 {
     return std::round(d(gen));
 }
 
-int32_t UniformIntDistrib::generate()
+int32_t UniformIntDistribution::generate()
 {
     return d(gen);
 }
 
-int32_t ExponentialDistrib::generate()
+int32_t ExponentialDistribution::generate()
 {
     return d(gen);
 }
