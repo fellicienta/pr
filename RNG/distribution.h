@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <memory>
 #include <random>
 #include <string>
 
@@ -13,46 +14,47 @@ class Distribution
 {
 public:
     virtual ~Distribution() = default;
-    virtual Statistic generate(const uint32_t sample_size) = 0;
+    virtual int32_t generate() = 0;
 };
 
-class Normal_distrib : public Distribution
+class NormalDistrib : public Distribution
 {
 public:
-    Normal_distrib(const int32_t mean, const uint32_t deviation)
+    NormalDistrib(const int32_t mean, const uint32_t deviation)
         : d(mean, deviation)
     {
     }
-    Statistic generate(const uint32_t sample_size) override;
+    int32_t generate() override;
 
 private:
     std::normal_distribution<> d;
 };
 
-class Exponential_distrib : public Distribution
+class ExponentialDistrib : public Distribution
 {
 public:
-    Exponential_distrib(const uint32_t time_unit)
+    ExponentialDistrib(const uint32_t time_unit)
         : d(time_unit)
     {
     }
-    Statistic generate(const uint32_t sample_size) override;
+    int32_t generate() override;
 
 private:
     std::exponential_distribution<> d;
 };
 
-class Uniform_int_distrib : public Distribution
+class UniformIntDistrib : public Distribution
 {
 public:
-    Uniform_int_distrib(const int32_t a, const int32_t b)
+    UniformIntDistrib(const int32_t a, const int32_t b)
         : d(a, b)
     {
     }
-    Statistic generate(const uint32_t sample_size) override;
+    int32_t generate() override;
 
 private:
     std::uniform_int_distribution<> d;
 };
 
+Statistic generate_statistic(std::shared_ptr<Distribution> d, const uint32_t sample_size);
 void save_statistic(const std::string &file_name, const Statistic &st);

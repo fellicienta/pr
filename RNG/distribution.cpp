@@ -2,32 +2,27 @@
 
 #include <fstream>
 
-Statistic Normal_distrib::generate(const uint32_t sample_size)
+int32_t NormalDistrib::generate()
 {
-    Statistic st;
-
-    for (uint32_t i = 0; i < sample_size; ++i)
-        ++st[std::round(d(gen))];
-
-    return st;
+    return std::round(d(gen));
 }
 
-Statistic Uniform_int_distrib::generate(const uint32_t sample_size)
+int32_t UniformIntDistrib::generate()
 {
-    Statistic st;
-
-    for (uint32_t i = 0; i < sample_size; ++i)
-        ++st[d(gen)];
-
-    return st;
+    return d(gen);
 }
 
-Statistic Exponential_distrib::generate(const uint32_t sample_size)
+int32_t ExponentialDistrib::generate()
+{
+    return d(gen);
+}
+
+Statistic generate_statistic(std::shared_ptr<Distribution> d, const uint32_t sample_size)
 {
     Statistic st;
 
     for (uint32_t i = 0; i < sample_size; ++i)
-        ++st[d(gen)];
+        ++st[d->generate()];
 
     return st;
 }
