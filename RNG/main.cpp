@@ -1,10 +1,16 @@
-#include "lib.h"
+#include "distribution.h"
+
+#include <memory>
 
 int main()
 {
-    save_statistic("uniform.csv", uniform_distribution(1, 100, 10000));
-    save_statistic("normal.csv", normal_distribution(50, 10, 10000));
-    save_statistic("exponential.csv", exponential_distribution(1, 10000));
+    std::map<std::string, std::shared_ptr<Distribution>> m;
+    m.emplace("uniform.csv", std::make_shared<Uniform_int_distrib>(1, 100));
+    m.emplace("normal.csv", std::make_shared<Normal_distrib>(30, 10));
+    m.emplace("exponential.csv", std::make_shared<Exponential_distrib>(1));
+
+    for (auto x : m)
+        save_statistic(x.first, x.second->generate(100000));
 
     return 0;
 }

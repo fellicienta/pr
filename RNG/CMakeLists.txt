@@ -8,7 +8,7 @@ include(GoogleTest)
 
 enable_testing()
 
-set (SOURCE_EXE main.cpp lib.cpp)
+set (SOURCE_EXE main.cpp distribution.cpp)
 
 add_executable(main ${SOURCE_EXE})
 
