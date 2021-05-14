@@ -4,30 +4,36 @@
 
 TEST(CorrectBrackets, one_couple)
 {
-    EXPECT_EQ("Success", check_brackets("[]"));
+    std::string s("[]");
+    EXPECT_EQ("Success", check_brackets(get_error_pos(s)));
 }
 
 TEST(CorrectBrackets, many_couples)
 {
-    EXPECT_EQ("Success", check_brackets("([](){([])})"));
+    std::string s("([](){([])})");
+    EXPECT_EQ("Success", check_brackets(get_error_pos(s)));
 }
 
 TEST(CorrectBrackets, function_call)
 {
-    EXPECT_EQ("Success", check_brackets("foo(bar);"));
+    std::string s("foo(bar);");
+    EXPECT_EQ("Success", check_brackets(get_error_pos(s)));
 }
 
 TEST(IncorrectBrackets, 1_case)
 {
-    EXPECT_EQ("3", check_brackets("[]([]"));
+    std::string s("[]([]");
+    EXPECT_EQ("3", check_brackets(get_error_pos(s)));
 }
 
 TEST(IncorrectBrackets, 2_case)
 {
-    EXPECT_EQ("3", check_brackets("{[}"));
+    std::string s("{[}");
+    EXPECT_EQ("3", check_brackets(get_error_pos(s)));
 }
 
 TEST(IncorrectBrackets, function_call)
 {
-    EXPECT_EQ("10", check_brackets("foo(bar[i);"));
+    std::string s("foo(bar[i);");
+    EXPECT_EQ("10", check_brackets(get_error_pos(s)));
 }

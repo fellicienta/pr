@@ -2,4 +2,5 @@
 
 #include <string>
 
-std::string check_brackets(std::string str);
+int32_t get_error_pos(const std::string &str);
+std::string check_brackets(const int32_t result);
