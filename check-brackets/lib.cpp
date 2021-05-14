@@ -13,7 +13,7 @@ bool is_punct(const char c)
     if (ispunct(c))
     {
         for (auto x : BRACKETS)
-            if (c == x.second)
+            if (c == x.first || c == x.second)
                 return false;
     }
     return true;
@@ -24,7 +24,6 @@ bool is_open_bracket(const char c)
     for (auto x : BRACKETS)
         if (c == x.first)
             return true;
-    // return c == '(' || c == '[' || c == '{';
     return false;
 }
 
@@ -49,25 +48,22 @@ void fill_map()
 }
 } // namespace
 
-int32_t get_error_pos(const std::string &str)
+int32_t find_error_pos(const std::string &str)
 {
     fill_map();
     uint32_t counter = 0;
-    //   std::stack<char> st;
-    std::stack<char> error_pos;
     std::stack<std::pair<char, uint32_t>> st;
+
     for (auto c : str)
     {
         ++counter;
-        if (is_open_bracket(c))
-        {
-            st.emplace(c, counter);
-            //  st.push(c);
-            // error_pos.push(counter);
-        }
-        else if (is_text(c))
+        if (is_text(c))
         {
             continue;
+        }
+        else if (is_open_bracket(c))
+        {
+            st.emplace(c, counter);
         }
         else
         {
@@ -75,21 +71,22 @@ int32_t get_error_pos(const std::string &str)
             {
                 return counter;
             }
-            //      std::pair<char, uint32_t> m = st.top().value_comp();
             if (is_couple(st.top().first, c))
             {
                 st.pop();
-                //   error_pos.pop();
             }
             else
+            {
                 return counter;
+            }
         }
     }
     if (st.empty())
+    {
         return -1;
+    }
     else
     {
-        //      std::pair<char, uint32_t> m = st.top();
         return st.top().second;
     }
 }
