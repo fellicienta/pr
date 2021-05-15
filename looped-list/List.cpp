@@ -1,6 +1,6 @@
 #include "List.h"
 
-List *generate_list(size_t n)
+List *generate_list(const size_t n)
 {
     if (0 == n)
         return nullptr;
@@ -18,7 +18,7 @@ List *generate_list(size_t n)
     return head;
 }
 
-size_t get_survivor(List *&list, size_t step)
+size_t get_survivor(List *&list, const size_t step)
 {
     if (list == nullptr)
         return 0;
@@ -46,7 +46,7 @@ size_t get_survivor(List *&list, size_t step)
     return current->element;
 }
 
-size_t formula(size_t n, size_t k)
+size_t formula(const size_t n, const size_t k)
 {
     size_t res = 0;
     for (size_t i = 1; i <= n; ++i)
