@@ -2,33 +2,43 @@
 #include <stdint.h>
 
 uint16_t rand_value();
-void print_line(uint16_t t_position, uint16_t h_position);
+void print_line(const uint16_t t_position, const uint16_t h_position);
 
-class Tortoise 
+class Competitor
 {
 public:
-    void action(uint16_t value);
+    ~Competitor() = default;
+    virtual uint16_t get_position() = 0;
+    virtual void action(const uint16_t value) = 0;
+    virtual bool is_winner() = 0;
+};
+
+class Tortoise : public Competitor
+{
+public:
+    uint16_t get_position() override;
+    void action(const uint16_t value) override;
+    bool is_winner() override;
     void fast_plod();
     void slip();
     void slow_plod();
-    uint16_t get_position();
-    bool is_winner();
+
 private:
     uint16_t position = 1;
 };
 
-class Hare
+class Hare : public Competitor
 {
 public:
-    void action(uint16_t value);
+    void action(const uint16_t value) override;
+    uint16_t get_position() override;
+    bool is_winner() override;
     void sleep();
     void big_hop();
     void big_slip();
     void small_hop();
     void small_slip();
-    bool is_winner();
-    uint16_t get_position();
+
 private:
     uint16_t position = 1;
 };
-
