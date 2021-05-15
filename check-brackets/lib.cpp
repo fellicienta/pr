@@ -4,6 +4,7 @@
 #include <map>
 #include <stack>
 
+const uint32_t SUCCESS = std::numeric_limits<uint32_t>::max();
 std::map<char, char> BRACKETS;
 
 namespace
@@ -11,11 +12,9 @@ namespace
 bool is_punct(const char c)
 {
     if (ispunct(c))
-    {
         for (auto x : BRACKETS)
             if (c == x.first || c == x.second)
                 return false;
-    }
     return true;
 }
 
@@ -40,17 +39,11 @@ bool is_couple(char top, const char c)
     return false;
 }
 
-void fill_map()
-{
-    BRACKETS.emplace('(', ')');
-    BRACKETS.emplace('{', '}');
-    BRACKETS.emplace('[', ']');
-}
 } // namespace
 
-int32_t find_error_pos(const std::string &str)
+uint32_t check_brackets(const std::string &str)
 {
-    fill_map();
+    set_brackets();
     uint32_t counter = 0;
     std::stack<std::pair<char, uint32_t>> st;
 
@@ -81,9 +74,10 @@ int32_t find_error_pos(const std::string &str)
             }
         }
     }
+
     if (st.empty())
     {
-        return -1;
+        return SUCCESS;
     }
     else
     {
@@ -91,7 +85,14 @@ int32_t find_error_pos(const std::string &str)
     }
 }
 
-std::string check_brackets(const int32_t result)
+std::string check_result(const int32_t result)
 {
-    return result == -1 ? "Success" : std::to_string(result);
+    return result == SUCCESS ? "Success" : std::to_string(result);
+}
+
+void set_brackets()
+{
+    BRACKETS.emplace('(', ')');
+    BRACKETS.emplace('{', '}');
+    BRACKETS.emplace('[', ']');
 }
