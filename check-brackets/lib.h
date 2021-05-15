@@ -2,5 +2,6 @@
 
 #include <string>
 
-int32_t find_error_pos(const std::string &str);
-std::string check_brackets(const int32_t result);
+void set_brackets();
+uint32_t check_brackets(const std::string &str);
+std::string check_result(const int32_t result);
