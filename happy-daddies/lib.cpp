@@ -3,6 +3,8 @@
 #include <random>
 #include <stdint.h>
 
+namespace
+{
 uint32_t baby()
 {
     static std::random_device rd;
@@ -10,10 +12,11 @@ uint32_t baby()
 
     return rd() % 2;
 }
+} // namespace
 
 double get_ratio()
 {
-    uint32_t families = 100000;
+    const uint32_t families = 100000;
     uint32_t girls = 0;
 
     for (uint32_t i = 0; i < families; ++i)
@@ -22,5 +25,5 @@ double get_ratio()
             ++girls;
     }
 
-    return (double)families / girls;
+    return static_cast<double>(families) / girls;
 }
