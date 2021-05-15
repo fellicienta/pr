@@ -1,18 +1,21 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.10)
 
 project (adder) 
 
-add_subdirectory(googletest)
+find_package(GTest REQUIRED)
+
 include(GoogleTest)
 
 enable_testing()
 
-set (SOURCE_EXE Test.cpp)
-set (SOURCE_LIB adder.cpp)
+set (SOURCE_EXE Test.cpp adder.cpp)
 
-add_library(adder STATIC ${SOURCE_LIB})
 add_executable(Test ${SOURCE_EXE})
 
-target_link_libraries(Test adder gtest gtest_main gmock)
+target_link_libraries(Test gtest gtest_main gmock pthread)
+
+set_target_properties(Test PROPERTIES
+            CXX_STANDARD 17
+            CXX_EXTENSIONS OFF)
 
 gtest_discover_tests(Test)
