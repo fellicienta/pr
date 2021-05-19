@@ -1,55 +1,65 @@
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
 
+#include <fstream>
 #include <iostream>
 #include <iterator>
+using namespace std;
 
-int main(int ac, char* av[])
+// A helper function to simplify the main part.
+template<class T>
+ostream &operator<<(ostream &os, const vector<T> &v)
 {
-    try {
-        std::vector<std::string> v;
-        po::options_description desc("Allowed options");
-        desc.add_options()
-            ("help", "Produce help message")
-            ("add", po::value< std::vector<std::string> >(), "Add values")
-            ("sub", po::value< std::vector<std::string> >(), "Subtract values")
-            ("mul", po::value< std::vector<std::string> >(), "Multiply values")
-            ("div", po::value< std::vector<std::string> >(), "Divide values")
-        ;
+    copy(v.begin(), v.end(), ostream_iterator<T>(os, " "));
+    return os;
+}
 
-        po::variables_map vm;        
-        po::store(po::command_line_parser(ac, av).options(desc).
-                    allow_unregistered().run(), vm);
-        po::notify(vm);    
+int main(int ac, char *av[])
+{
+    try
+    {
+        po::options_description generic("Generic options");
+        generic.add_options()("help", "produce help message");
 
-        if (vm.count("help")) {
-            std::cout << desc << "\n";
+        po::options_description config("Configuration");
+        config.add_options()("values,O", po::value<vector<int>>()->multitoken(), "values");
+
+        po::options_description hidden("Hidden options");
+        hidden.add_options()("operation", po::value<vector<string>>(), "operation");
+
+        po::options_description cmdline_options;
+        cmdline_options.add(generic).add(hidden).add(config);
+
+        po::options_description visible("Allowed options");
+        visible.add(generic).add(config);
+
+        po::positional_options_description p;
+        p.add("operation", -1);
+
+        po::variables_map vm;
+        store(po::command_line_parser(ac, av).options(cmdline_options).positional(p).run(), vm);
+        notify(vm);
+
+        if (vm.count("help"))
+        {
+            cout << visible << "\n";
             return 0;
         }
 
-        if (vm.count("add") && ac == 4) {
-            std::cout << "Add: " << atoi(av[2]) + atoi(av[3]) << ".\n";
+        if (vm.count("values"))
+        {
+            cout << "values: " << vm["values"].as<vector<int>>() << "\n";
         }
-        if (vm.count("sub") && ac == 4) {
-            std::cout << "Sub: " << atoi(av[2]) - atoi(av[3]) << ".\n";
-        } 
-        else if (vm.count("mul") && ac == 4) {
-            std::cout << atoi(av[2]) * atoi(av[3]) << ".\n";
-        }
-        else if (vm.count("div")&& ac == 4) {
-            std::cout << atof(av[2]) / atof(av[3]) << ".\n";
-        } 
-        else {
-            std::cout << "Error: no option is entered or the required argument is missing.\n";
+
+        if (vm.count("operation"))
+        {
+            cout << "operation: " << vm["operation"].as<vector<string>>() << "\n";
         }
     }
-    catch(std::exception& e) {
-        std::cerr << "Error: " << e.what() << "\n";
+    catch (exception &e)
+    {
+        cout << e.what() << "\n";
         return 1;
     }
-    catch(...) {
-        std::cerr << "Exception of unknown type!\n";
-    }
-
     return 0;
 }
