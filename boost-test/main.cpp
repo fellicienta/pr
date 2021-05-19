@@ -1,40 +1,23 @@
 #include <boost/program_options.hpp>
-namespace po = boost::program_options;
-
-#include <fstream>
 #include <iostream>
-#include <iterator>
-using namespace std;
-
-// A helper function to simplify the main part.
-template<class T>
-ostream &operator<<(ostream &os, const vector<T> &v)
-{
-    copy(v.begin(), v.end(), ostream_iterator<T>(os, " "));
-    return os;
-}
+namespace po = boost::program_options;
 
 int main(int ac, char *av[])
 {
     try
     {
         po::options_description generic("Generic options");
-        generic.add_options()("help", "produce help message");
-
-        po::options_description config("Configuration");
-        config.add_options()("values,O", po::value<vector<int>>()->multitoken(), "values");
+        generic.add_options()("help", "produce help message")("add", "Add values")(
+            "sub", "Subtract values")("mul", "Multiply values")("div", "Divide values");
 
         po::options_description hidden("Hidden options");
-        hidden.add_options()("operation", po::value<vector<string>>(), "operation");
+        hidden.add_options()("values", po::value<std::vector<int32_t>>(), "values");
 
         po::options_description cmdline_options;
-        cmdline_options.add(generic).add(hidden).add(config);
-
-        po::options_description visible("Allowed options");
-        visible.add(generic).add(config);
+        cmdline_options.add(generic).add(hidden);
 
         po::positional_options_description p;
-        p.add("operation", -1);
+        p.add("values", -1);
 
         po::variables_map vm;
         store(po::command_line_parser(ac, av).options(cmdline_options).positional(p).run(), vm);
@@ -42,23 +25,48 @@ int main(int ac, char *av[])
 
         if (vm.count("help"))
         {
-            cout << visible << "\n";
+            std::cout << generic << "\n";
             return 0;
         }
 
         if (vm.count("values"))
         {
-            cout << "values: " << vm["values"].as<vector<int>>() << "\n";
-        }
+            std::vector<int32_t> args(vm["values"].as<std::vector<int32_t>>());
+            bool operation = false;
+            if (vm.count("add"))
+            {
+                std::cout << "Add: " << args[0] + args[1] << std::endl;
+                operation = true;
+            }
+            if (vm.count("sub"))
+            {
+                std::cout << "Sub: " << args[0] - args[1] << std::endl;
+                operation = true;
+            }
+            if (vm.count("mul"))
+            {
+                std::cout << "Mul: " << args[0] * args[1] << std::endl;
+                operation = true;
+            }
+            if (vm.count("div"))
+            {
+                std::cout << "Div: " << args[0] / args[1] << std::endl;
+                operation = true;
+            }
 
-        if (vm.count("operation"))
+            if (!operation)
+            {
+                std::cout << "Error: no operation is entered." << std::endl;
+            }
+        }
+        else
         {
-            cout << "operation: " << vm["operation"].as<vector<string>>() << "\n";
+            std::cout << "Error: the required arguments are missing." << std::endl;
         }
     }
-    catch (exception &e)
+    catch (std::exception &e)
     {
-        cout << e.what() << "\n";
+        std::cout << e.what() << std::endl;
         return 1;
     }
     return 0;
