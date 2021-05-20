@@ -72,7 +72,7 @@ int main(int ac, char *av[])
         }
 
         if (!option)
-            std::cout << "Error: no operation is entered." << std::endl;
+            std::cout << "Error: no option is entered." << std::endl;
     }
     catch (std::exception &e)
     {
