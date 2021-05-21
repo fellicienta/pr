@@ -4,10 +4,10 @@
 namespace po = boost::program_options;
 
 const std::map<std::string, std::function<int32_t(const int32_t, const int32_t)>> CALCULATOR = {
-    {"add", [](int32_t a, int32_t b) { return a + b; }},
-    {"sub", [](int32_t a, int32_t b) { return a - b; }},
-    {"mul", [](int32_t a, int32_t b) { return a * b; }},
-    {"div", [](int32_t a, int32_t b) { return a / b; }}};
+    {"add", [](const int32_t a, const int32_t b) { return a + b; }},
+    {"sub", [](const int32_t a, const int32_t b) { return a - b; }},
+    {"mul", [](const int32_t a, const int32_t b) { return a * b; }},
+    {"div", [](const int32_t a, const int32_t b) { return a / b; }}};
 
 const std::map<std::string, std::string> OPERATIONS = {{"add", "Add values"},
                                                        {"sub", "Subtract values"},
@@ -53,7 +53,7 @@ int main(int ac, char *av[])
             return 1;
         }
 
-        std::vector<int32_t> args(vm["values"].as<std::vector<int32_t>>());
+        const std::vector<int32_t> args(vm["values"].as<std::vector<int32_t>>());
         if (args.size() != 2)
         {
             std::cout << "Error: invalid number of arguments." << std::endl;
