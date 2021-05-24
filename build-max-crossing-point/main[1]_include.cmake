@@ -1,0 +1,5 @@
+if(EXISTS "/home/fellicienta/GH/pr/build-max-crossing-point/main[1]_tests.cmake")
+  include("/home/fellicienta/GH/pr/build-max-crossing-point/main[1]_tests.cmake")
+else()
+  add_test(main_NOT_BUILT main_NOT_BUILT)
+endif()
