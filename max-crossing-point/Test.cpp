@@ -1,4 +1,5 @@
 #include "lib.h"
+
 #include <gtest/gtest.h>
 
 TEST(main, case_1)

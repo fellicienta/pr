@@ -7,7 +7,7 @@ using Frequency = Frequencies::const_iterator;
 
 namespace
 {
-Frequencies get_overlap_frequency(LineSegmentSet set)
+Frequencies get_overlap_frequency(const LineSegmentSet &set)
 {
     Frequencies f;
     for (auto segment : set)
@@ -18,7 +18,7 @@ Frequencies get_overlap_frequency(LineSegmentSet set)
 
     return f;
 }
-uint32_t get_max_frequency(Frequencies f)
+uint32_t get_max_frequency(const Frequencies &f)
 {
     Frequency it = std::max_element(
         f.begin(), f.end(),
@@ -30,7 +30,7 @@ uint32_t get_max_frequency(Frequencies f)
 }
 } // namespace
 
-OverlapPointSet find_max_overlap_point(LineSegmentSet set)
+OverlapPointSet find_max_overlap_point(const LineSegmentSet &set)
 {
     Frequencies f = get_overlap_frequency(set);
     uint32_t max_frequency = get_max_frequency(f);
