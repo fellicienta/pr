@@ -1,8 +1,6 @@
 #include "lib.h"
 
 #include <algorithm>
-#include <iostream>
-#include <iterator>
 
 using Frequencies = std::map<Point, uint32_t>;
 using Frequency = Frequencies::const_iterator;
