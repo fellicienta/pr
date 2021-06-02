@@ -33,7 +33,7 @@ void counting_sort(std::vector<ItemType> &v, const uint32_t digit)
         temp[count[v[i] / digit % 10] - 1] = v[i];
         count[v[i] / digit % 10]--;
     }
-    v = temp;
+    v.swap(temp);
 }
 } // namespace
 
