@@ -1,6 +1,18 @@
 #include "radix.h"
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <random>
+
+void generate_numbers(std::vector<ItemType> &v, const uint32_t amount, const ItemType min_value,
+                      const ItemType max_value)
+{
+    std::random_device rd;
+    std::mt19937 g(rd());
+
+    for (uint16_t i = 0; i < amount; ++i)
+        v.push_back(min_value + rd() % max_value);
+}
 
 TEST(RadixSort, manual_input)
 {
@@ -10,8 +22,7 @@ TEST(RadixSort, manual_input)
     std::sort(v2.begin(), v2.end());
     radix_sort(v);
 
-    for (uint32_t i = 0; i < v.size(); ++i)
-        ASSERT_EQ(v[i], v2[i]);
+    ASSERT_THAT(v, testing::ElementsAreArray(v2));
 }
 
 TEST(RadixSort, generated_input)
@@ -23,6 +34,5 @@ TEST(RadixSort, generated_input)
     std::sort(v2.begin(), v2.end());
     radix_sort(v);
 
-    for (uint32_t i = 0; i < v.size(); ++i)
-        ASSERT_EQ(v[i], v2[i]);
+    ASSERT_THAT(v, testing::ElementsAreArray(v2));
 }

@@ -2,17 +2,6 @@
 
 #include <algorithm>
 #include <map>
-#include <random>
-
-void generate_numbers(std::vector<ItemType> &v, const uint32_t amount, const uint32_t a,
-                      const uint32_t b)
-{
-    std::random_device rd;
-    std::mt19937 g(rd());
-
-    for (uint16_t i = 0; i < amount; ++i)
-        v.push_back(a + rd() % b);
-}
 
 namespace
 {
