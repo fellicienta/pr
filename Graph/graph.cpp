@@ -3,7 +3,7 @@
 #include <iterator>
 #include <queue>
 
-void Graph::input_graph(std::vector<std::pair<Vertex, Vertex>> &edges)
+void Graph::input_graph(const std::vector<std::pair<Vertex, Vertex>> &edges)
 {
     for (auto &x : edges)
         insert_edge(x.first, x.second);

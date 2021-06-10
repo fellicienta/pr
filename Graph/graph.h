@@ -11,7 +11,7 @@ using AdjacencyList = std::map<Vertex, VertexList>;
 struct Graph
 {
 public:
-    void input_graph(std::vector<std::pair<Vertex, Vertex>> &edges);
+    void input_graph(const std::vector<std::pair<Vertex, Vertex>> &edges);
     void insert_edge(const Vertex x, const Vertex y);
     void bfs(const Vertex start);
     void dfs(const Vertex v);
