@@ -5,82 +5,88 @@
 
 class TestClass : public testing::Test
 {
+public:
+    static void SetUpTestCase()
+    {
+        g.input_graph(edges);
+        g2.input_graph(edges2);
+    }
+
 protected:
-    void SetUp() override
-    {
-        g = new Graph();
-        g->input_graph(edges);
-        g2 = new Graph();
-        g2->input_graph(edges2);
-    }
-    void TearDown() override
-    {
-        delete g;
-        delete g2;
-    }
-    const std::vector<std::pair<Vertex, Vertex>> edges = {{5, 1}, {5, 2}, {5, 4}, {4, 2}, {2, 3}};
-    const std::vector<std::pair<Vertex, Vertex>> edges2 = {{4, 7}, {4, 5}, {7, 2},
-                                                           {2, 4}, {2, 3}, {5, 3}};
-    Graph *g;
-    Graph *g2;
+    static std::vector<std::pair<Vertex, Vertex>> edges;
+    static std::vector<std::pair<Vertex, Vertex>> edges2;
+    static Graph g;
+    static Graph g2;
 };
+
+Graph TestClass::g;
+Graph TestClass::g2;
+std::vector<std::pair<Vertex, Vertex>> TestClass::edges = {{5, 1}, {5, 2}, {5, 4}, {4, 2}, {2, 3}};
+std::vector<std::pair<Vertex, Vertex>> TestClass::edges2 = {{4, 7}, {4, 5}, {7, 2},
+                                                            {2, 4}, {2, 3}, {5, 3}};
 
 TEST_F(TestClass, bfs_5)
 {
     std::vector<Vertex> result = {5, 1, 2, 4, 3};
-    ASSERT_THAT(g->bfs(5), testing::ElementsAreArray(result));
+    g.bfs(5);
+    ASSERT_THAT(g.get_bfs_result(), testing::ElementsAreArray(result));
 
     std::vector<Vertex> result2 = {5, 4, 3, 7, 2};
-    ASSERT_THAT(g2->bfs(5), testing::ElementsAreArray(result2));
+    g2.bfs(5);
+    ASSERT_THAT(g2.get_bfs_result(), testing::ElementsAreArray(result2));
 }
 
 TEST_F(TestClass, bfs_4)
 {
     std::vector<Vertex> result = {4, 5, 2, 1, 3};
-    ASSERT_THAT(g->bfs(4), testing::ElementsAreArray(result));
+    g.bfs(4);
+    ASSERT_THAT(g.get_bfs_result(), testing::ElementsAreArray(result));
 
     std::vector<Vertex> result2 = {4, 7, 5, 2, 3};
-    ASSERT_THAT(g2->bfs(4), testing::ElementsAreArray(result2));
+    g2.bfs(4);
+    ASSERT_THAT(g2.get_bfs_result(), testing::ElementsAreArray(result2));
 }
 
 TEST_F(TestClass, bfs_3)
 {
     std::vector<Vertex> result = {3, 2, 5, 4, 1};
-    ASSERT_THAT(g->bfs(3), testing::ElementsAreArray(result));
+    g.bfs(3);
+    ASSERT_THAT(g.get_bfs_result(), testing::ElementsAreArray(result));
 
     std::vector<Vertex> result2 = {3, 2, 5, 7, 4};
-    ASSERT_THAT(g2->bfs(3), testing::ElementsAreArray(result2));
+    g2.bfs(3);
+    ASSERT_THAT(g2.get_bfs_result(), testing::ElementsAreArray(result2));
 }
 
 TEST_F(TestClass, dfs_5)
 {
     std::vector<Vertex> result = {5, 1, 2, 4, 3};
-    g->dfs(5);
-    ASSERT_THAT(g->get_dfs_result(), testing::ElementsAreArray(result));
+    g.dfs(5);
+    ASSERT_THAT(g.get_dfs_result(), testing::ElementsAreArray(result));
 
     std::vector<Vertex> result2 = {5, 4, 7, 2, 3};
-    g2->dfs(5);
-    ASSERT_THAT(g2->get_dfs_result(), testing::ElementsAreArray(result2));
+    g2.dfs(5);
+    ASSERT_THAT(g2.get_dfs_result(), testing::ElementsAreArray(result2));
 }
 
 TEST_F(TestClass, dfs_4)
 {
     std::vector<Vertex> result = {4, 5, 1, 2, 3};
-    g->dfs(4);
-    ASSERT_THAT(g->get_dfs_result(), testing::ElementsAreArray(result));
+    g.dfs(4);
+    ASSERT_THAT(g.get_dfs_result(), testing::ElementsAreArray(result));
 
     std::vector<Vertex> result2 = {4, 7, 2, 3, 5};
-    g2->dfs(4);
-    ASSERT_THAT(g2->get_dfs_result(), testing::ElementsAreArray(result2));
+    g2.dfs(4);
+    ASSERT_THAT(g2.get_dfs_result(), testing::ElementsAreArray(result2));
 }
 
 TEST_F(TestClass, dfs_2)
 {
     std::vector<Vertex> result = {2, 5, 1, 4, 3};
-    g->dfs(2);
-    ASSERT_THAT(g->get_dfs_result(), testing::ElementsAreArray(result));
+    g.dfs(2);
+    ASSERT_THAT(g.get_dfs_result(), testing::ElementsAreArray(result));
 
     std::vector<Vertex> result2 = {2, 7, 4, 5, 3};
-    g2->dfs(2);
-    ASSERT_THAT(g2->get_dfs_result(), testing::ElementsAreArray(result2));
+    g2.dfs(2);
+    ASSERT_THAT(g2.get_dfs_result(), testing::ElementsAreArray(result2));
 }
