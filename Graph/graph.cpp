@@ -26,8 +26,8 @@ std::vector<Vertex> Graph::bfs(const Vertex start)
     while (!queue.empty())
     {
         v = queue.front();
+        queue.pop();
         result.push_back(v);
-        result.back();
 
         for (auto it = m_adjacency_list[v].cbegin(); it != m_adjacency_list[v].cend(); ++it)
         {
