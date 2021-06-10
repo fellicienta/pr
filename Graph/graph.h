@@ -21,11 +21,11 @@ public:
     void input_graph(const std::vector<std::pair<Vertex, Vertex>> &edges);
     std::vector<Vertex> bfs(const Vertex start);
     void dfs(const Vertex v);
-
-    std::vector<Vertex> m_dfs_result;
+    std::vector<Vertex> get_dfs_result();
 
 private:
     void insert_edge(const Vertex x, const Vertex y);
+    std::vector<Vertex> m_dfs_result;
 
     AdjacencyList m_adjacency_list;
     uint32_t m_nvertices;

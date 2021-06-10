@@ -58,3 +58,8 @@ void Graph::dfs(const Vertex v)
             dfs(*it);
     }
 }
+
+std::vector<Vertex> Graph::get_dfs_result()
+{
+    return m_dfs_result;
+}
