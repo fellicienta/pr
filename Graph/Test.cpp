@@ -16,6 +16,7 @@ protected:
     void TearDown() override
     {
         delete g;
+        delete g2;
     }
     const std::vector<std::pair<Vertex, Vertex>> edges = {{5, 1}, {5, 2}, {5, 4}, {4, 2}, {2, 3}};
     const std::vector<std::pair<Vertex, Vertex>> edges2 = {{4, 1}, {4, 5}, {1, 2},
