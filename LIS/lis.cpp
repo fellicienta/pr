@@ -12,7 +12,7 @@ std::vector<ItemType> lis(const std::vector<ItemType> &v)
 
     const uint32_t size = v.size();
     std::vector<uint32_t> length(size, 1);
-    std::vector<int32_t> predecessor(size, g_invalid);
+    std::vector<uint32_t> predecessor(size, g_invalid);
 
     for (uint32_t i = 1; i < size; i++)
     {
