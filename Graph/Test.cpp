@@ -8,9 +8,9 @@ class TestClass : public testing::Test
 protected:
     void SetUp() override
     {
-        g = new Graph(n);
+        g = new Graph();
         g->input_graph(edges);
-        g2 = new Graph(n);
+        g2 = new Graph();
         g2->input_graph(edges2);
     }
     void TearDown() override
@@ -20,7 +20,6 @@ protected:
     const std::vector<std::pair<Vertex, Vertex>> edges = {{5, 1}, {5, 2}, {5, 4}, {4, 2}, {2, 3}};
     const std::vector<std::pair<Vertex, Vertex>> edges2 = {{4, 1}, {4, 5}, {1, 2},
                                                            {2, 4}, {2, 3}, {5, 3}};
-    const uint32_t n = 5;
     Graph *g;
     Graph *g2;
 };

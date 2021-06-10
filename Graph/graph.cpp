@@ -3,12 +3,6 @@
 #include <iterator>
 #include <queue>
 
-Graph::Graph(const uint32_t n_vertices)
-    : m_nvertices(n_vertices)
-{
-    m_adjacency_list.resize(n_vertices + 1);
-}
-
 void Graph::input_graph(const std::vector<std::pair<Vertex, Vertex>> &edges)
 {
     for (auto &x : edges)
