@@ -2,6 +2,7 @@
 
 #include <iterator>
 #include <queue>
+#include <stack>
 
 void Graph::input_graph(const std::vector<std::pair<Vertex, Vertex>> &edges)
 {
@@ -15,10 +16,11 @@ void Graph::insert_edge(const Vertex x, const Vertex y)
     m_adjacency_list[y].push_back(x);
 }
 
-void Graph::bfs(const Vertex start)
+std::vector<Vertex> Graph::bfs(const Vertex start)
 {
+    std::vector<Vertex> result;
     std::queue<Vertex> queue;
-    int32_t v; // Current Vertex
+    Vertex v; // Current Vertex
     used[start] = true;
     queue.push(start);
 
@@ -26,7 +28,7 @@ void Graph::bfs(const Vertex start)
     {
         v = queue.front();
         queue.pop();
-        m_bfs_result.push_back(v);
+        result.push_back(v);
 
         for (auto it : m_adjacency_list[v])
         {
@@ -37,13 +39,22 @@ void Graph::bfs(const Vertex start)
             }
         }
     }
+    return result;
 }
 
-void Graph::dfs(const Vertex v)
+void Graph::dfs_u(const Vertex start)
 {
-    m_dfs_result.push_back(v);
-    used[v] = true;
+    std::stack<Vertex> st;
+    Vertex v; // Current Vertex
 
+    st.push(start);
+    used[start] = true;
+
+    while (!st.empty())
+    {
+        v = st.top();
+        st.pop();
+    }
     for (auto it : m_adjacency_list[v])
     {
         if (!used[it])
@@ -51,12 +62,37 @@ void Graph::dfs(const Vertex v)
     }
 }
 
-std::vector<Vertex> Graph::get_bfs_result()
+std::vector<Vertex> Graph::dfs(const Vertex start)
 {
-    return m_bfs_result;
-}
+    std::vector<Vertex> result;
+    if (m_adjacency_list.empty())
+        return result;
 
-std::vector<Vertex> Graph::get_dfs_result()
-{
-    return m_dfs_result;
+    std::stack<Vertex> st;
+    Vertex v; // Current Vertex
+
+    st.push(start);
+    //  used[start] = true;
+
+    while (!st.empty())
+    {
+        v = st.top();
+        st.pop();
+
+        if (!used[v])
+        {
+            result.push_back(v);
+            used[v] = true;
+        }
+
+        for (auto it : m_adjacency_list[v])
+        {
+            if (!used[it])
+            {
+                st.push(it);
+            }
+        }
+    }
+
+    return result;
 }
