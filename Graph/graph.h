@@ -14,7 +14,7 @@ public:
     void input_graph(const std::vector<std::pair<Vertex, Vertex>> &edges);
     void insert_edge(const Vertex x, const Vertex y);
     std::vector<Vertex> bfs(const Vertex start);
-    std::vector<Vertex> dfs(const Vertex v);
+    std::vector<Vertex> dfs(const Vertex start);
 
 private:
     AdjacencyList m_adjacency_list;
