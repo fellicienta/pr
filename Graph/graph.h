@@ -17,6 +17,8 @@ public:
     std::vector<Vertex> dfs(const Vertex start);
 
 private:
+    void initialize_search();
+
     AdjacencyList m_adjacency_list;
     std::map<Vertex, bool> m_used;
 };

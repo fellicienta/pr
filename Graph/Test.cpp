@@ -59,6 +59,9 @@ TEST_F(TestClass, dfs_5)
 
     std::vector<Vertex> result2 = {5, 4, 7, 2, 3};
     ASSERT_THAT(g2.dfs(5), testing::ElementsAreArray(result2));
+    std::vector<Vertex> result3 = {5, 4, 3, 7, 2};
+    ASSERT_THAT(g2.bfs(5), testing::ElementsAreArray(result3));
+    ASSERT_THAT(g2.bfs(5), testing::ElementsAreArray(result3));
 }
 
 TEST_F(TestClass, dfs_4)
