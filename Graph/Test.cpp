@@ -78,3 +78,11 @@ TEST_F(TestClass, dfs_2)
     std::vector<Vertex> result2 = {2, 7, 4, 5, 3};
     ASSERT_THAT(g2.dfs(2), testing::ElementsAreArray(result2));
 }
+
+TEST(Graph, empty_graph)
+{
+    static Graph g;
+    std::vector<Vertex> result = {};
+    ASSERT_THAT(g.bfs(2), testing::ElementsAreArray(result));
+    ASSERT_THAT(g.dfs(2), testing::ElementsAreArray(result));
+}

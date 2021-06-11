@@ -1,5 +1,6 @@
 #include "graph.h"
 
+#include <boost/range/adaptor/reversed.hpp>
 #include <iterator>
 #include <queue>
 #include <stack>
@@ -19,9 +20,12 @@ void Graph::insert_edge(const Vertex x, const Vertex y)
 std::vector<Vertex> Graph::bfs(const Vertex start)
 {
     std::vector<Vertex> result;
+    if (m_adjacency_list.empty())
+        return result;
+
     std::queue<Vertex> queue;
     Vertex v; // Current Vertex
-    used[start] = true;
+    m_used[start] = true;
     queue.push(start);
 
     while (!queue.empty())
@@ -32,34 +36,14 @@ std::vector<Vertex> Graph::bfs(const Vertex start)
 
         for (auto it : m_adjacency_list[v])
         {
-            if (!used[it])
+            if (!m_used[it])
             {
                 queue.push(it);
-                used[it] = true;
+                m_used[it] = true;
             }
         }
     }
     return result;
-}
-
-void Graph::dfs_u(const Vertex start)
-{
-    std::stack<Vertex> st;
-    Vertex v; // Current Vertex
-
-    st.push(start);
-    used[start] = true;
-
-    while (!st.empty())
-    {
-        v = st.top();
-        st.pop();
-    }
-    for (auto it : m_adjacency_list[v])
-    {
-        if (!used[it])
-            dfs(it);
-    }
 }
 
 std::vector<Vertex> Graph::dfs(const Vertex start)
@@ -70,27 +54,23 @@ std::vector<Vertex> Graph::dfs(const Vertex start)
 
     std::stack<Vertex> st;
     Vertex v; // Current Vertex
-
     st.push(start);
-    //  used[start] = true;
 
     while (!st.empty())
     {
         v = st.top();
         st.pop();
 
-        if (!used[v])
-        {
-            result.push_back(v);
-            used[v] = true;
-        }
+        if (m_used[v])
+            continue;
 
-        for (auto it : m_adjacency_list[v])
+        m_used[v] = true;
+        result.push_back(v);
+
+        for (auto it : boost::adaptors::reverse(m_adjacency_list[v]))
         {
-            if (!used[it])
-            {
+            if (!m_used[it])
                 st.push(it);
-            }
         }
     }
 
