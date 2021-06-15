@@ -36,7 +36,7 @@ std::vector<Set> linear_partition(const Set &set, const uint32_t k)
     std::vector<Set> table(n, std::vector<ItemType>(k));
     std::vector<Set> delimiter(n, std::vector<ItemType>(k));
     std::vector<ItemType> subset_sum(n);
-    uint32_t cost;
+
     subset_sum[0] = set[0];
 
     for (uint32_t i = 1; i < n; ++i)
@@ -53,7 +53,7 @@ std::vector<Set> linear_partition(const Set &set, const uint32_t k)
             table[i][j] = g_max;
             for (uint32_t d = 0; d < i; ++d)
             {
-                cost = std::max(table[d][j - 1], subset_sum[i] - subset_sum[d]);
+                uint32_t cost = std::max(table[d][j - 1], subset_sum[i] - subset_sum[d]);
                 if (table[i][j] > cost)
                 {
                     table[i][j] = cost;
