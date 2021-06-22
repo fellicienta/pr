@@ -45,7 +45,7 @@ double random_sampling(const Set &G, const Set &B)
     return min_sum;
 }
 
-TEST(Googlers, distance_check2)
+TEST(Googlers, distance_check)
 {
     Point p1 = {1, 5};
     Point p2 = {1, 7};
