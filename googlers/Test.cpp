@@ -30,11 +30,11 @@ double random_sampling(const Set &G, const Set &B)
         Set bicycles(B);
         double current_sum = 0;
 
-        while (googlers.size() != 0)
+        while (!googlers.empty())
         {
             uint32_t index_g = rd() % googlers.size();
             uint32_t index_b = rd() % bicycles.size();
-            current_sum += find_distance(googlers[index_g], bicycles[index_b]);
+            current_sum += calculate_distance(googlers[index_g], bicycles[index_b]);
             googlers.erase(googlers.begin() + index_g);
             bicycles.erase(bicycles.begin() + index_b);
         }
@@ -50,7 +50,7 @@ TEST(Googlers, distance_check)
     Point p1 = {1, 5};
     Point p2 = {1, 7};
 
-    EXPECT_EQ(find_distance(p1, p2), 2);
+    EXPECT_EQ(calculate_distance(p1, p2), 2);
 }
 
 TEST(Googlers, manual_input)

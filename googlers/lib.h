@@ -6,5 +6,5 @@
 using Point = std::pair<int32_t, int32_t>;
 using Set = std::vector<Point>;
 
-double distance(const Set &G, Set B);
-double find_distance(const Point p1, const Point p2);
+double distance(Set G, Set B);
+double calculate_distance(const Point p1, const Point p2);
