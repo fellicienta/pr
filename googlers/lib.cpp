@@ -4,7 +4,7 @@
 
 double g_max = std::numeric_limits<double>::max();
 
-double find_distance(const Point &p1, const Point &p2)
+double find_distance(const Point p1, const Point p2)
 {
     return sqrt(pow((p2.first - p1.first), 2) + pow((p2.second - p1.second), 2));
 }
