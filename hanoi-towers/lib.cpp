@@ -49,17 +49,11 @@ void hanoi(Tower (&t)[g_size], const uint32_t from, uint32_t to)
     for (uint32_t j = 1; j <= total_moves; ++j)
     {
         if (j % 3 == 1)
-        {
             move_disk(t, from, tmp);
-        }
         else if (j % 3 == 2)
-        {
             move_disk(t, from, to);
-        }
         else if (j % 3 == 0)
-        {
             move_disk(t, tmp, to);
-        }
     }
 }
 

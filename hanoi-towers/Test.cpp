@@ -24,8 +24,8 @@ TEST(HanoiTowers, even_number_of_disks)
 
 TEST(HanoiTowers, odd_number_of_disks)
 {
-    uint32_t from = 0;
-    uint32_t to = 2;
+    uint32_t from = 1;
+    uint32_t to = 0;
     uint32_t n = 11;
     Tower t[g_size];
     make_tower(t[from], n);
